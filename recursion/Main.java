@@ -12,12 +12,17 @@ public class Main {
 
         // long ans = toh(n, 1, 2, 3);
 
-        int[] arr = { 4, 3, 0, -1, 6, 7, 10, 5, 6 };
+        int[] arr = { 4, 6, 0, -1, 6, 7, 6, 5, 6 };
         // displayReverse(arr, 0);
         // int ans = MaxElementinArray(arr, 0);
         // int ans = firstindex(arr , 6 , 0);
-        int ans = lastindex(arr, 6, 0);
-        System.out.println(ans);
+        // int ans = lastindex(arr, 6, 0);
+        // System.out.println(ans);
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        ans = Allindices(arr, 6, 0);
+        for (Integer ele : ans) {
+            System.out.print(ele + " ");
+        }
 
     }
 
@@ -125,6 +130,19 @@ public class Main {
 
         } else
             return liisa;
+
+    }
+
+    public static ArrayList<Integer> Allindices(int[] arr, int element, int i) {
+        if (i == arr.length) {
+            ArrayList<Integer> li = new ArrayList<Integer>();
+            return li;
+        }
+        ArrayList<Integer> li = Allindices(arr, element, i + 1);
+        if (arr[i] == element)
+            li.add(i);
+
+        return li;
 
     }
 
