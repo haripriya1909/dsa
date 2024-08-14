@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scn = new Scanner(System.in);
-        // int n = scn.nextInt();
+        int n = scn.nextInt();
         // increasing(n);
         // int ans = factorial(n);
         // int ans = powerN(5 , n);
@@ -12,18 +12,26 @@ public class Main {
 
         // long ans = toh(n, 1, 2, 3);
 
-        int[] arr = { 4, 6, 0, -1, 6, 7, 6, 5, 6 };
+        // int[] arr = { 4, 6, 0, -1, 6, 7, 6, 5, 6 };
         // displayReverse(arr, 0);
         // int ans = MaxElementinArray(arr, 0);
         // int ans = firstindex(arr , 6 , 0);
         // int ans = lastindex(arr, 6, 0);
         // System.out.println(ans);
-        ArrayList<Integer> ans = new ArrayList<Integer>();
-        ans = Allindices(arr, 6, 0);
-        for (Integer ele : ans) {
-            System.out.print(ele + " ");
-        }
+        // ArrayList<Integer> ans = new ArrayList<Integer>();
+        // ans = Allindices(arr, 6, 0);
+        // for (Integer ele : ans) {
+        // System.out.print(ele + " ");
+        // }
+        // String input = scn.next();
+        // List<String> output = getSubsequence(input);
+        // List<String> output = getKeypad(input);
+        // System.out.println(output);
+        // int count = getStairspath(n);
+        // System.out.println(count);
 
+        List<String> output = getStairspath(n);
+        System.out.println(output);
     }
 
     public static void increasing(int n) {
@@ -146,4 +154,84 @@ public class Main {
 
     }
 
+    public static List<String> getSubsequence(String s) {
+        if (s.length() == 0) {
+            List<String> list = new ArrayList<String>();
+            list.add("");
+            return list;
+        }
+        char ch = s.charAt(0); // my work
+
+        String ros = s.substring(1); // rest of the substring
+        List<String> li = getSubsequence(ros); // expectation ki ros ki subsequence muje recurison laakr dega
+        List<String> ans = new ArrayList<String>(); // new arraylist har baar bana rahi hu aur answer copy krrhi hu
+                                                    // space aur charcater add krke
+        for (String str : li) {
+            ans.add("" + str);
+            ans.add(ch + str);
+        }
+        return ans;
+    }
+
+    static String[] codes = { ".,", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tu", "vwx", "yz" };
+
+    public static List<String> getKeypad(String s) {
+        char ch = s.charAt(0);
+        if (s.length() == 1) {
+            List<String> li = new ArrayList<String>();
+            for (int i = 0; i < codes[ch - '0'].length(); i++) {
+                char c = codes[ch - '0'].charAt(i);
+                li.add(String.valueOf(c));
+            }
+            return li;
+        }
+        List<String> ros = getKeypad(s.substring(1));
+        List<String> ans = new ArrayList<String>();
+        for (String str : ros) {
+            for (int i = 0; i < codes[ch - '0'].length(); i++) {
+                char add = codes[ch - '0'].charAt(i);
+                ans.add(add + str);
+            }
+        }
+        return ans;
+    }
+
+    // public static int getStairspath(int n) {
+    // if (n == 0) {
+
+    // return 1;
+    // } else if (n < 0)
+    // return 0;
+
+    // int count = 0;
+    // count += getStairspath(n - 1);
+    // count += getStairspath(n - 2);
+    // count += getStairspath(n - 3);
+
+    // return count;
+    // }
+    public static List<String> getStairspath(int n) {
+        if (n == 0) {
+            List<String> li = new ArrayList<String>();
+            li.add("");
+            return li;
+        } else if (n < 0) {
+            List<String> li = new ArrayList<String>();
+            return li;
+        }
+        List<String> path1 = getStairspath(n - 1);
+        List<String> path2 = getStairspath(n - 2);
+        List<String> path3 = getStairspath(n - 3);
+        List<String> ans = new ArrayList<String>();
+        for (String path : path1) {
+            ans.add(1 + path);
+        }
+        for (String path : path2) {
+            ans.add(2 + path);
+        }
+        for (String path : path3) {
+            ans.add(3 + path);
+        }
+        return ans;
+    }
 }
